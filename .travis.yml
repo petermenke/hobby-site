@@ -1,0 +1,42 @@
+dist: trusty
+sudo: false
+
+language: node_js
+node_js:
+  - '8'
+
+# Setup Environment
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+cache:
+  directories:
+    - ./node_modules
+
+install:
+  - npm install
+
+# Setup Jobs
+jobs:
+  include:
+    - stage: Unit Tests
+      script: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox -C client
+
+    - stage: Deploy
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep_history: true
+        on:
+          branch: master
+        local_dir: client/dist/client
+
+env:
+  global:
+    # GITHUB_TOKEN
+    secure: Q7bWnaRUDY4ZZPXKKVgNnnMq44iHnRHMtYvb1vUzRwn8SVgRkLvQpKkNL6HNWptRm6S8nrlvOY7QiJO4bFaii1vitDEaOgfgJer1DIanZ6CGAt3W3LYUuxL0tynXIltjXSmUdZ9e0t8Eyu5E0KAT1pqHq3rbdOnizjzk3XG44t7Hg/ViOl9sPsDWqs2Of4mjd1z+QgfWDmJYiueUcS4wivx3Wje82RKyRABPrsk82oCauoR11s3IfVmldeOVBV6dkEHfL6m5rPTZUUPczmxl9VOSJHusx8hVpRJpye+znQRq3oOQh4Jy4i2faYcNh8px6YxtC4zua/TDu8gFI/zxALvj9NIlK9s0okaD4qvT1ooOdYSYn+UdcVhDh38EoeWWPMrQhhaRODo7a30YRNPFyl+OlMU4FWEua2Z3uw6w+T9LVaogy/VVxAZ+I9nQaP7QQXF60CVcjCYtVbzxc6WD5dFfDeg0xyhsLmsrLsGkcPkuEaAvKKtRhRLpqEYNrz7thiYfJbieHiXRhGsnGel4+TRI9THp6cUthXDI3zyfat6R51Pci1dXLerkhCCHLnsZFyqWzJv3R9Mc8JWNix0GQqdILLgiqjxsk8RK08jYxPbJniqpqnmVKjdONWqEyoIDvq+wH+38GyZERxrSGxYP6x5dhPFnvgAzbWGuZ5VM07A=

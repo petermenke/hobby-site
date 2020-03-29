@@ -1,0 +1,20 @@
+{
+  "name": "hobby-site",
+  "version": "1.0.0",
+  "description": "WIP - A website to dump creations and ideas",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test -C client",
+    "start": "npm run start -C client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petermenke/hobby-site.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petermenke/hobby-site/issues"
+  },
+  "homepage": "https://github.com/petermenke/hobby-site#readme"
+}
